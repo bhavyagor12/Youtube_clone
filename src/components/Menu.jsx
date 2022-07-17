@@ -6,6 +6,7 @@ import {MdSubscriptions,MdOutlineVideoLibrary,MdHistory,MdOutlineLibraryMusic,Md
 import {IoMdSettings} from "react-icons/io"
 import {SiGooglenews} from 'react-icons/si';
 import {VscColorMode} from 'react-icons/vsc'
+import { Link } from "react-router-dom";
 const Container = styled.div`
   flex: 1;
   background-color:${({theme}) => theme.bg};
@@ -33,6 +34,10 @@ align-items: center;
 cursor: pointer;
 gap: 20px;
 padding: 7.5px 0;
+
+&:hover{
+  background-color: ${({theme}) => theme.soft}
+}
 `;
 const Hr = styled.hr`
   margin: 15px 0px;
@@ -61,10 +66,12 @@ gap: 5px;
 const Menu = ({darkMode,setDarkMode}) => {
   return <Container>
     <Wrapper>
+    <Link to="/" style={{textDecoration:"none",color:"inherit"}}>
     <Logo >
       <Img src={logo}/>
       YTUBE
     </Logo>
+    </Link>
     <Item>
       <AiOutlineHome/>
       Home
@@ -89,7 +96,7 @@ const Menu = ({darkMode,setDarkMode}) => {
     <Hr />
     <Login>
      Sign in to like videos,comment and subscribe
-     <Button><MdOutlineAccountCircle/>Sign in</Button>
+     <Link to="signin" style={{textDecoration:"none"}}><Button><MdOutlineAccountCircle/>Sign in</Button></Link>
     </Login>
     <Hr />
     <Item>
@@ -131,7 +138,7 @@ const Menu = ({darkMode,setDarkMode}) => {
     </Item>
     <Item onClick={() =>setDarkMode(!darkMode)}>
       <VscColorMode/>
-    Switch Theme
+   {darkMode ? "Light" : "Dark"}
     </Item>
     
     </Wrapper></Container>;

@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { MdOutlineAccountCircle,MdSearch } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 import styled from "styled-components";
 
 const Container = styled.div `
@@ -61,7 +62,7 @@ const Navbar = () => {
           <Input placeholder="Search" />
           <Icon><MdSearch/></Icon>
         </Search>
-        <Button><MdOutlineAccountCircle/>Sign in</Button>
+        <Link to="signin" style={{textDecoration:"none"}}><Button><MdOutlineAccountCircle/>Sign in</Button></Link>
       </Wrapper>
     </Container>
   )
