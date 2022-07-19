@@ -31,6 +31,6 @@ export const signin = async (req, res, next) => {
       .status(200)
       .json(others);
   } catch (err) {
-    next(createError(404, "random error!"));
+    next(err);
   }
 };

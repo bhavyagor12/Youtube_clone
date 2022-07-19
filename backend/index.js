@@ -15,7 +15,7 @@ const connect = () => {
     .then(() => {
       console.log("connected to DB");
     })
-    .catch((err) => clg.error(err));
+    .catch((err) => console.error(err));
 };
 
 app.use(cookieParser());
