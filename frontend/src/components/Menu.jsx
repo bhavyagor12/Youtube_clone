@@ -7,6 +7,7 @@ import {IoMdSettings} from "react-icons/io"
 import {SiGooglenews} from 'react-icons/si';
 import {VscColorMode} from 'react-icons/vsc'
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 const Container = styled.div`
   flex: 1;
   background-color:${({theme}) => theme.bg};
@@ -64,6 +65,7 @@ gap: 5px;
   cursor: pointer;
 `
 const Menu = ({darkMode,setDarkMode}) => {
+  const {user} = useSelector(state => state.user);
   return <Container>
     <Wrapper>
     <Link to="/" style={{textDecoration:"none",color:"inherit"}}>
@@ -72,18 +74,24 @@ const Menu = ({darkMode,setDarkMode}) => {
       YTUBE
     </Logo>
     </Link>
+    <Link to="/" style={{textDecoration:"none", color:"inherit"}}>
     <Item>
       <AiOutlineHome/>
       Home
     </Item>
+    </Link>
+    <Link to="trends" style={{textDecoration:"none", color:"inherit"}}>
     <Item>
       <AiOutlineSearch/>
       Explore
     </Item>
+    </Link>
+    <Link to="subscriptions" style={{textDecoration:"none",color:"inherit"}}>
     <Item>
       <MdSubscriptions/>
       Subscriptions
     </Item>
+    </Link>
     <Hr />
     <Item>
       <MdOutlineVideoLibrary/>
@@ -94,11 +102,11 @@ const Menu = ({darkMode,setDarkMode}) => {
       History
     </Item>
     <Hr />
-    <Login>
+  {!user && <> <Login>
      Sign in to like videos,comment and subscribe
      <Link to="signin" style={{textDecoration:"none"}}><Button><MdOutlineAccountCircle/>Sign in</Button></Link>
     </Login>
-    <Hr />
+    <Hr /></> }
     <Item>
       <MdOutlineLibraryMusic/>
       Music

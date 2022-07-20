@@ -3,7 +3,8 @@ import React from 'react'
 import { MdOutlineAccountCircle,MdSearch } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import styled from "styled-components";
-
+import {useSelector} from "react-redux"
+import {RiAddBoxLine} from "react-icons/ri"
 const Container = styled.div `
   position: sticky;
   top: 0;
@@ -54,7 +55,23 @@ gap: 5px;
 const Icon = styled.div`
 color:${({theme}) => theme.text};
 `
+
+const User = styled.div`
+display: flex;
+align-items: center;
+gap: 10px;
+font-weight: 500;
+color:${({theme}) => theme.text};
+`;
+
+const Avatar = styled.img`
+height:32px;
+width:32px;
+border-radius:50%;
+background-color: #999;
+`;
 const Navbar = () => {
+  const {user} = useSelector(state => state.user);
   return (
     <Container>
       <Wrapper>
@@ -62,7 +79,13 @@ const Navbar = () => {
           <Input placeholder="Search" />
           <Icon><MdSearch/></Icon>
         </Search>
-        <Link to="signin" style={{textDecoration:"none"}}><Button><MdOutlineAccountCircle/>Sign in</Button></Link>
+
+        {user ? 
+        <User>
+        <RiAddBoxLine size={30}/>
+        <Avatar/>
+        {user.name}
+        </User> :<Link to="signin" style={{textDecoration:"none"}}><Button><MdOutlineAccountCircle/>Sign in</Button></Link>}
       </Wrapper>
     </Container>
   )

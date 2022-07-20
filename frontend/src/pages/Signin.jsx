@@ -1,5 +1,8 @@
-import React from 'react'
-import styled from 'styled-components';
+import axios from 'axios';
+import React, { useState } from 'react'
+import styled, { createGlobalStyle } from 'styled-components';
+import {useDispatch} from 'react-redux';
+import {loginFailure,loginSuccess,loginStart} from '../redux/userSlice'
 const Container = styled.div `
 display: flex;
 flex-direction: column;
@@ -58,18 +61,45 @@ const Links = styled.span`
 display: flex;
 margin-left:30px;`;
 const Signin = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  
+  const dispatch = useDispatch();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    dispatch(loginStart());
+    try {
+      const res = await axios.post("/auth/signin", { name, password });
+      dispatch(loginSuccess(res.data));
+    } catch (err) {
+      dispatch(loginFailure());
+    }
+  };
+
+  /* const handleSignUp = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post("/auth/signup", { name,email, password });
+      console.log(res.data);
+    } catch (err) {
+
+    }
+  }; */
+
   return (
     <Container><Wrapper><Title>Signin</Title>
     <SubTitle>To continue to YTUBE</SubTitle>
-    <Input placeholder="username" />
-    <Input type="password" placeholder="password" />
-    <Button>Sign in</Button>
+    <Input placeholder="username" onChange={e => setName(e.target.value)} />
+    <Input type="password" placeholder="password" onChange={e => setPassword(e.target.value)} />
+    <Button onClick={handleLogin}>Sign in</Button>
     <Title>or</Title>
-    <Input placeholder="username" />
-    <Input placeholder="email" />
-    <Input type="password" placeholder="password" />
+    <Input placeholder="username" onChange={e => setName(e.target.value)} />
+    <Input placeholder="email" onChange={e => setEmail(e.target.value)} />
+    <Input type="password" placeholder="password" onChange={e => setPassword(e.target.value)} />
     <Button>Sign up</Button>
-    
+  
     </Wrapper>
     <More>
     English(USA)
