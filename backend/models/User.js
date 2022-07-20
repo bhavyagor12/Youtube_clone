@@ -14,7 +14,6 @@ const UserSchema = new mongoose.Schema(
     },
     password: {
       type: "string",
-      required: true,
     },
     img: {
       type: "string",
@@ -25,6 +24,10 @@ const UserSchema = new mongoose.Schema(
     },
     subcribedUsers: {
       type: [String],
+    },
+    fromGoogle: {
+      type: Boolean,
+      default: false,
     },
   },
   {

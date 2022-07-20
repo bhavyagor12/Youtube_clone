@@ -1,10 +1,11 @@
-import React from 'react'
-
+import React, { useState } from 'react'
+import Upload from "./Upload";
 import { MdOutlineAccountCircle,MdSearch } from 'react-icons/md';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import {useSelector} from "react-redux"
 import {RiAddBoxLine} from "react-icons/ri"
+
 const Container = styled.div `
   position: sticky;
   top: 0;
@@ -71,23 +72,40 @@ border-radius:50%;
 background-color: #999;
 `;
 const Navbar = () => {
+  const navigate = useNavigate()
+  const [open, setOpen] = useState(false);
+  const [q, setQ] = useState("");
   const {user} = useSelector(state => state.user);
-  return (
-    <Container>
-      <Wrapper>
-        <Search >
-          <Input placeholder="Search" />
-          <Icon><MdSearch/></Icon>
-        </Search>
 
-        {user ? 
-        <User>
-        <RiAddBoxLine size={30}/>
-        <Avatar/>
-        {user.name}
-        </User> :<Link to="signin" style={{textDecoration:"none"}}><Button><MdOutlineAccountCircle/>Sign in</Button></Link>}
+  return (
+    <>
+      <Container>
+        <Wrapper>
+          <Search>
+            <Input
+              placeholder="Search"
+              onChange={(e) => setQ(e.target.value)}
+            />
+            <MdSearch onClick={()=>navigate(`/search?q=${q}`)}/>
+          </Search>
+
+        {user ? (
+            <User>
+              <RiAddBoxLine size={30} onClick={() => setOpen(true)} />
+              <Avatar src={user.img} />
+              {user.name}
+            </User>
+          ) : (
+            <Link to="signin" style={{ textDecoration: "none" }}>
+              <Button>
+                <MdOutlineAccountCircle />
+                SIGN IN
+              </Button>
+            </Link>)}
       </Wrapper>
     </Container>
+    {open && <Upload setOpen={setOpen} />}
+    </>
   )
 }
 

@@ -8,6 +8,9 @@ import {SiGooglenews} from 'react-icons/si';
 import {VscColorMode} from 'react-icons/vsc'
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import {useDispatch} from 'react-redux';
+import { logout } from "../redux/userSlice";
 const Container = styled.div`
   flex: 1;
   background-color:${({theme}) => theme.bg};
@@ -66,6 +69,19 @@ gap: 5px;
 `
 const Menu = ({darkMode,setDarkMode}) => {
   const {user} = useSelector(state => state.user);
+  const dispatch = new useDispatch();
+
+  const logoutUser = async() =>{
+    dispatch(logout());
+   try{
+    const res = await axios.get("auth/logout")
+    console.log(res);
+    
+   }catch(e){
+     console.log(e.response);
+
+   }
+  } 
   return <Container>
     <Wrapper>
     <Link to="/" style={{textDecoration:"none",color:"inherit"}}>
@@ -102,11 +118,13 @@ const Menu = ({darkMode,setDarkMode}) => {
       History
     </Item>
     <Hr />
-  {!user && <> <Login>
+  {!user ? <> <Login>
      Sign in to like videos,comment and subscribe
      <Link to="signin" style={{textDecoration:"none"}}><Button><MdOutlineAccountCircle/>Sign in</Button></Link>
     </Login>
-    <Hr /></> }
+    <Hr /></> 
+    : <><Button onClick={logoutUser}>Log out</Button><Hr/></> 
+    }
     <Item>
       <MdOutlineLibraryMusic/>
       Music
